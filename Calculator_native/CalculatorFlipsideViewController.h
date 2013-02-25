@@ -18,6 +18,10 @@
 
 @property (weak, nonatomic) id <CalculatorFlipsideViewControllerDelegate> delegate;
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 - (IBAction)done:(id)sender;
 
 @end

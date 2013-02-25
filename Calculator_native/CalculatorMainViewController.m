@@ -8,6 +8,7 @@
 
 #import "CalculatorMainViewController.h"
 #import "CalculatorBrain.h"
+#import "CalculatorAppDelegate.h"
 
 
 @interface CalculatorMainViewController ()
@@ -61,6 +62,11 @@
     firstNumber = 0;
     operation = nil;
     currentTape = [[NSMutableString alloc] init];
+    
+    
+    //core data stuff
+    CalculatorAppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
+    context = [appdelegate managedObjectContext];
     
     
 }
@@ -159,7 +165,7 @@
          [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
         [self layout_landscape];
         }
-   else if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
+   else if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown)  {
        [self layout_portrait];
     }
 }
@@ -180,10 +186,10 @@
     [self.button_c          setFrame:CGRectMake(164, 97, 64, 44)];
     [self.button_ac         setFrame:CGRectMake(237, 97, 64, 44)];
     
-    [self.button_sine       setFrame:CGRectMake(20, 144, 64, 44)];
-    [self.button_cos        setFrame:CGRectMake(92, 144, 64, 44)];
-    [self.button_tan        setFrame:CGRectMake(164, 144, 64, 44)];
-    [self.button_plusminus  setFrame:CGRectMake(237, 144, 64, 44)];
+    [self.button_sine       setFrame:CGRectMake(20, 149, 64, 44)];
+    [self.button_cos        setFrame:CGRectMake(92, 149, 64, 44)];
+    [self.button_tan        setFrame:CGRectMake(164, 149, 64, 44)];
+    [self.button_plusminus  setFrame:CGRectMake(237, 149, 64, 44)];
     
     [self.button_log        setFrame:CGRectMake(20, 199, 64, 44)];
     [self.button_ln         setFrame:CGRectMake(92, 199, 64, 44)];
@@ -285,6 +291,7 @@
     operation = nil;
     equalsButton = NO;
     decimal_current = NO;
+    specialPressed = NO;
     
     [input setString:@""];
     [self.label_calculation setText:@"0"];
@@ -298,7 +305,6 @@
 - (IBAction)cButtonPressed:(id)sender {
     
     self.label_calculation.text = [self.brain cButton:self.label_calculation.text];
-    
     
 }
 
@@ -316,8 +322,11 @@
         if ([self.label_calculation.text length] == input.length)
         {
             firstNumber = [input doubleValue];  //if new calculation is pressed after pressing equals
-        }
         
+        }
+    
+    specialPressed = NO;
+    
 }
 
 /***************************************************************************************
@@ -379,12 +388,18 @@
     
     [self debugging];
     
-    double result;
+    double result = 0.0;
 
+    
     //if operation is not set first number to text
-    if (operation == nil && equalsButton == NO){
+    if (specialPressed == YES)
+    {
+        firstNumber = [self.label_Answer.text doubleValue];
+        specialPressed = NO;
+    
+    }
+    else if (operation == nil && equalsButton == NO){
         firstNumber = [self.label_calculation.text doubleValue];
-        result = 0;
     }
     else if(operation != nil && equalsButton == NO){
         secondNumber = [self.brain getLastNumber:self.label_calculation.text];
@@ -396,9 +411,6 @@
         
         firstNumber = result;
       
-    } else{
-        result = 0;
-        
     }
     
     //if equals buttons was pressed then do this
@@ -407,8 +419,6 @@
         [self.label_calculation setText:input];
         equalsButton = NO;
     }
-    
-    
     
     UIButton *selected = (UIButton *)  sender;
     operation = [[NSString alloc] initWithString:selected.titleLabel.text];
@@ -434,11 +444,9 @@
 
         double result;
     
-    
+    if (specialPressed == NO){
     //if operation is not set first number to text
     secondNumber = [self.brain getLastNumber:self.label_calculation.text];
-    
-    
 
     if (equalsButton == YES) {
         [input setString:[NSString stringWithFormat:@"%g", firstNumber]];
@@ -450,41 +458,533 @@
         equalsButton = NO;
     }
     
-    
         result = [self.brain doCalculation:operation :firstNumber :secondNumber];
  
         self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
-      //  self.label_calculation.text = @"";
-        
-       // firstNumber = 0;
-       // secondNumber = 0;
-       // operation = nil;
         
         [input setString:@""];
         firstNumber = result;
         equalsButton = YES;
     
-    
-        
         [self debugging];
         NSLog(@"result %g", result);
+    
+    ////CORE DATA
     
     [currentTape setString:self.label_calculation.text];
     [currentTape appendString:@" = "];
     [currentTape appendString:[NSString stringWithFormat:@"%g", result]];
-   
-    NSLog(currentTape);
 
+    NSEntityDescription *entitydesc = [NSEntityDescription entityForName:@"Calculation" inManagedObjectContext:context];
+    NSManagedObject *newCalculation = [[NSManagedObject alloc]initWithEntity:entitydesc insertIntoManagedObjectContext:context];
     
-    [tape_view arrayByAddingObject:[NSString stringWithString:currentTape]];
- 
+    [newCalculation setValue:currentTape forKey:@"calculation"];
     
+    NSError *error;
+    [context save:&error];
     
-     NSLog(@"%@", tape_view);
-    
-    
+    }
     
 }
+
+/***************************************************************************************
+            RECIPROCAL
+ ***************************************************************************************/
+
+- (IBAction)oneOverXPressed:(id)sender {
+    
+    double result;
+    
+    [self debugging];
+
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+        else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    
+    if (secondNumber){
+    result = [self.brain doOneOverX:secondNumber];
+    
+    firstNumber = result;
+    secondNumber = result;
+        
+    self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        [self.label_Answer setText:@"Error. Value Undefined"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+
+    specialPressed = YES;
+}
+
+/***************************************************************************************
+            SQUARE NUMBER
+ ***************************************************************************************/
+
+- (IBAction)squareNumber:(id)sender {
+    
+    double result;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    
+    if (secondNumber){
+        result = [self.brain doSquare:secondNumber];
+        
+        firstNumber = result;
+        secondNumber = result;
+
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+     specialPressed = YES;
+}
+
+/***************************************************************************************
+            SQUARE ROOT NUMBER
+ ***************************************************************************************/
+
+
+- (IBAction)squareRoot:(id)sender {
+    
+    double result;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    
+    if (secondNumber){
+        result = [self.brain doSquareRoot:secondNumber];
+        
+        firstNumber = result;
+        secondNumber = result;
+        
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+    specialPressed = YES;
+    
+}
+
+/***************************************************************************************
+        LOG NUMBER
+ ***************************************************************************************/
+
+- (IBAction)logButtonPressed:(id)sender {
+    
+    double result;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    
+    if (secondNumber){
+        result = [self.brain doLog:secondNumber];
+        
+        firstNumber = result;
+        secondNumber = result;
+        
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else if(secondNumber != 0){
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+    specialPressed = YES;
+    
+}
+
+/***************************************************************************************
+            LN NUMBER
+ ***************************************************************************************/
+
+- (IBAction)lnButtonPressed:(id)sender {
+    
+    double result;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    
+    if (secondNumber){
+        result = [self.brain doLn:secondNumber];
+        
+        firstNumber = result;
+        secondNumber = result;
+        
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+    specialPressed = YES;
+    
+}
+
+
+/***************************************************************************************
+            Pi BUTTON PRESSED
+ ***************************************************************************************/
+
+- (IBAction)piButtonPressed:(id)sender {
+    
+    firstNumber = [self.brain getPI];
+    self.label_Answer.text = [NSString stringWithFormat:@"%1.8f", firstNumber];
+    self.label_calculation.text = [NSString stringWithFormat:@"%1.8f", firstNumber];
+    equalsButton = YES;
+    //NEEDS FIXING
+}
+
+
+/***************************************************************************************
+            SIN or ARCSINE BUTTON PRESSED
+ ***************************************************************************************/
+
+- (IBAction)sinButtonPressed:(id)sender {
+    
+    UIButton *selected = (UIButton *)  sender;
+    NSString *title = [[NSString alloc] initWithString:selected.titleLabel.text];
+    BOOL radians = self.switch_Radians.isOn ? YES : NO;
+
+    
+    double result = 0.0;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+      if (secondNumber){
+          
+    if ([title isEqualToString:@"sin"])
+    {
+        result = [self.brain doSine:secondNumber:radians];
+    }
+    else if ([title isEqualToString:@"sin⁻¹"])
+    {
+        result = [self.brain doArcSine:secondNumber:radians];
+        [selected setTitle:@"sin" forState:UIControlStateNormal];
+    }
+  
+        firstNumber = result;
+        secondNumber = result;
+        
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+    specialPressed = YES;
+    
+    if (secondPressed == YES)
+    {
+        [self button2ndFunctionPressed:nil];
+    }
+    
+}
+
+/***************************************************************************************
+            COS or ARCCOS BUTTON PRESSED
+ ***************************************************************************************/
+
+- (IBAction)cosButtonPressed:(id)sender {
+    
+    
+    UIButton *selected = (UIButton *)  sender;
+    NSString *title = [[NSString alloc] initWithString:selected.titleLabel.text];
+    BOOL radians = self.switch_Radians.isOn ? YES : NO;
+    
+    double result = 0.0;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    if (secondNumber){
+        
+        if ([title isEqualToString:@"cos"])
+        {
+            result = [self.brain doCos:secondNumber:radians];
+        }
+        else if ([title isEqualToString:@"cos⁻¹"])
+        {
+            result = [self.brain doArcCos:secondNumber:radians];
+        }
+        
+        firstNumber = result;
+        secondNumber = result;
+        
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+    specialPressed = YES;
+    
+    if (secondPressed == YES)
+    {
+        [self button2ndFunctionPressed:nil];
+    }
+}
+
+/***************************************************************************************
+            TAN or ARCTAN BUTTON PRESSED
+ ***************************************************************************************/
+
+- (IBAction)tanButtonPressed:(id)sender {
+    
+    UIButton *selected = (UIButton *)  sender;
+    NSString *title = [[NSString alloc] initWithString:selected.titleLabel.text];
+    BOOL radians = self.switch_Radians.isOn ? YES : NO;
+    
+    double result = 0.0;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    if (secondNumber){
+        
+        if ([title isEqualToString:@"tan"])
+        {
+            result = [self.brain doTan:secondNumber:radians];
+        }
+        else if ([title isEqualToString:@"tan⁻¹"])
+        {
+            result = [self.brain doArcTan:secondNumber:radians];
+            
+        }
+        
+        firstNumber = result;
+        secondNumber = result;
+        
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+    specialPressed = YES;
+    
+    if (secondPressed == YES)
+    {
+        [self button2ndFunctionPressed:nil];
+    }
+}
+
+/***************************************************************************************
+            +/- BUTTON PRESSED   
+ ***************************************************************************************/
+- (IBAction)positiveNegativePressed:(id)sender {
+    double result;
+    
+    [self debugging];
+    
+    if (specialPressed == YES || equalsButton == YES)
+    {
+        secondNumber = [self.label_Answer.text doubleValue];
+        equalsButton = NO;
+    }
+    else {
+        secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    }
+    
+    NSLog(@"second %g", secondNumber);
+    
+    
+    if (secondNumber){
+        result = [self.brain doPositiveNegative:secondNumber];
+        
+        firstNumber = result;
+        secondNumber = result;
+        
+        self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    }
+    else {
+        self.label_Answer.text = [NSString stringWithFormat:@"Enter Digit First"];
+    }
+    
+    [self.label_calculation setText:@""];
+    [input setString:@""];
+    
+    specialPressed = YES;
+}
+
+/***************************************************************************************
+            2ND FUNC BUTTON PRESSED
+ ***************************************************************************************/
+
+- (IBAction)button2ndFunctionPressed:(id)sender {
+    
+    if (secondPressed == NO) {
+        
+    [self.button_sine setTitle:@"sin⁻¹" forState:UIControlStateNormal];
+    [self.button_sine setHighlighted:YES];
+    
+    
+    [self.button_cos setTitle:@"cos⁻¹" forState:UIControlStateNormal];
+    [self.button_cos setHighlighted:YES];
+    
+    
+    [self.button_tan setTitle:@"tan⁻¹" forState:UIControlStateNormal];
+    [self.button_tan setHighlighted:YES];
+    
+    [self.button_2nd setHighlighted:YES];
+        
+        secondPressed = YES;
+    
+    }
+    else{
+    
+    [self.button_sine setTitle:@"sin" forState:UIControlStateNormal];
+    [self.button_sine setHighlighted:NO];
+    
+    [self.button_cos setTitle:@"cos" forState:UIControlStateNormal];
+    [self.button_cos setHighlighted:NO];
+    
+    [self.button_tan setTitle:@"tan" forState:UIControlStateNormal];
+    [self.button_tan setHighlighted:NO];
+    
+    [self.button_2nd setHighlighted:NO];
+        
+        secondPressed = NO;
+    
+    }
+   // self.button_sine.titleLabel.font = [UIFont systemFontOfSize:9];
+    
+}
+
+
+- (IBAction)percentButtonPressed {
+    
+    double result = 0.0;
+    
+    secondNumber = [self.brain getLastNumber:self.label_calculation.text];
+    
+    result = [self.brain doPercentage:operation :firstNumber :secondNumber];
+    
+    self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
+    
+    [input setString:@""];
+    firstNumber = result;
+
+    
+    [self debugging];
+    NSLog(@"result %g", result);
+
+    specialPressed = YES;
+    
+}
+
+
 
 
 @end

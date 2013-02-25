@@ -20,6 +20,8 @@
     double secondNumber;
     BOOL equalsButton;
     BOOL decimal_current;
+    BOOL specialPressed;
+    BOOL secondPressed;
 }
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -69,5 +71,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *button_history;
 @property (weak, nonatomic) IBOutlet UILabel *label_radians;
 @property (weak, nonatomic) IBOutlet UISwitch *switch_Radians;
+
+
+
+
+
 
 @end

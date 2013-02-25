@@ -49,7 +49,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="S2j-wt-bBn">
-                                <rect key="frame" x="19" y="98" width="64" height="44"/>
+                                <rect key="frame" x="19.25" y="98" width="64" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="tintColor" red="0.81568634510000004" green="0.09803922474" blue="0.12549020350000001" alpha="1" colorSpace="deviceRGB"/>
@@ -60,6 +60,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="6" kind="modal" identifier="showAlternate" modalTransitionStyle="flipHorizontal" id="0Vf-18-t7T"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TE8-iC-DyD">
                                 <rect key="frame" x="91" y="98" width="64" height="44"/>
@@ -73,6 +76,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="button2ndFunctionPressed:" destination="2" eventType="touchUpInside" id="MoM-bD-x1q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Spm-To-f1F">
                                 <rect key="frame" x="163" y="98" width="64" height="44"/>
@@ -111,13 +117,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="tintColor" red="0.81568634510000004" green="0.09803922474" blue="0.12549020350000001" alpha="1" colorSpace="deviceRGB"/>
-                                <state key="normal" title="sine">
+                                <state key="normal" title="sin">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="sinButtonPressed:" destination="2" eventType="touchUpInside" id="NuX-ej-aaQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vCD-ZJ-hGA">
                                 <rect key="frame" x="91" y="149" width="64" height="44"/>
@@ -131,6 +140,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="cosButtonPressed:" destination="2" eventType="touchUpInside" id="Sop-V1-dS4"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mCP-UL-YM2">
                                 <rect key="frame" x="163" y="149" width="64" height="44"/>
@@ -144,6 +156,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tanButtonPressed:" destination="2" eventType="touchUpInside" id="Ene-yG-Zfh"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e7r-Oh-ibE">
                                 <rect key="frame" x="236" y="149" width="64" height="44"/>
@@ -157,6 +172,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="positiveNegativePressed:" destination="2" eventType="touchUpInside" id="uj5-OO-DkZ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dhp-pc-Q0J">
                                 <rect key="frame" x="19" y="200" width="64" height="44"/>
@@ -170,6 +188,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="logButtonPressed:" destination="2" eventType="touchUpInside" id="gg7-SL-Jlh"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Oc0-yI-Bd6">
                                 <rect key="frame" x="91" y="200" width="64" height="44"/>
@@ -183,9 +204,12 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="lnButtonPressed:" destination="2" eventType="touchUpInside" id="4GJ-NN-ump"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4UK-4a-POS">
-                                <rect key="frame" x="163" y="200" width="64" height="44"/>
+                                <rect key="frame" x="162" y="199" width="64" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="tintColor" red="0.81568634510000004" green="0.09803922474" blue="0.12549020350000001" alpha="1" colorSpace="deviceRGB"/>
@@ -196,6 +220,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="piButtonPressed:" destination="2" eventType="touchUpInside" id="ff2-jW-eZT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iVG-Ud-JNr">
                                 <rect key="frame" x="236" y="200" width="64" height="44"/>
@@ -225,19 +252,25 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="oneOverXPressed:" destination="2" eventType="touchUpInside" id="agX-0t-BbB"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HUM-oS-xa0">
                                 <rect key="frame" x="91" y="251" width="64" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <color key="tintColor" red="0.81568634510000004" green="0.09803922474" blue="0.12549020350000001" alpha="1" colorSpace="deviceRGB"/>
-                                <state key="normal" title="x2">
+                                <state key="normal" title="x²">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="squareNumber:" destination="2" eventType="touchUpInside" id="XYb-x0-pE1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mLC-mT-XF5">
                                 <rect key="frame" x="163" y="251" width="64" height="44"/>
@@ -251,6 +284,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="squareRoot:" destination="2" eventType="touchUpInside" id="dzx-SY-AfT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="w6B-jv-td2">
                                 <rect key="frame" x="236" y="251" width="64" height="44"/>
@@ -472,6 +508,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="percentButtonPressed" destination="2" eventType="touchUpInside" id="YhS-Pc-lUY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SRb-EX-UPj">
                                 <rect key="frame" x="91" y="455" width="64" height="44"/>
@@ -518,7 +557,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.96381729014598538" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="button_1x" destination="cbw-Ig-Gd1" id="Dj3-ms-MeZ"/>
@@ -583,21 +622,107 @@
                                                 <action selector="done:" destination="6" id="16"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Clear" id="NkP-0l-vZJ">
+                                            <connections>
+                                                <action selector="clearData:" destination="6" id="kqs-e4-JSW"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="QUO-c3-veI">
+                                <rect key="frame" x="20" y="62" width="280" height="466"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="QUO-c3-veI" id="yro-ji-p2c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-142" y="203"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CalculatorFlipsideViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorFlipsideViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="clearData:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="CalculatorMainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorMainViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="button2ndFunctionPressed:"/>
+                <relationship kind="action" name="cButtonPressed:"/>
+                <relationship kind="action" name="cosButtonPressed:"/>
+                <relationship kind="action" name="decimalButtonPressed:"/>
+                <relationship kind="action" name="equalsPressed:"/>
+                <relationship kind="action" name="lnButtonPressed:"/>
+                <relationship kind="action" name="logButtonPressed:"/>
+                <relationship kind="action" name="numberPressed:"/>
+                <relationship kind="action" name="oneOverXPressed:"/>
+                <relationship kind="action" name="operationPressed:"/>
+                <relationship kind="action" name="piButtonPressed:"/>
+                <relationship kind="action" name="positiveNegativePressed:"/>
+                <relationship kind="action" name="sinButtonPressed:"/>
+                <relationship kind="action" name="squareNumber:"/>
+                <relationship kind="action" name="squareRoot:"/>
+                <relationship kind="action" name="tanButtonPressed:"/>
+                <relationship kind="outlet" name="button_1x" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_2nd" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_ac" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_add" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_c" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_cos" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_decimal" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_divide" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_eight" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_equals" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_five" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_four" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_history" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_ln" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_log" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_multiply" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_nine" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_one" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_percent" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_pi" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_plusminus" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_seven" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_sine" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_six" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_sq_root" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_sqaure" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_substract" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_tan" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_tape" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_three" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_two" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="button_zero" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="display_back" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="label_Answer" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="label_calculation" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="label_radians" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="switch_Radians" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="11"/>
+    </inferredMetricsTieBreakers>
 </document>

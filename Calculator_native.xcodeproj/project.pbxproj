@@ -67,14 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9777B22016D99076008DC0E2 /* Model */ = {
+		9777B22016D99076008DC0E2 /* Model (COREDATA) */ = {
 			isa = PBXGroup;
 			children = (
 				9777B21D16D9637E008DC0E2 /* Calculator_native.xcdatamodeld */,
 				9777B22116D990A1008DC0E2 /* Calculation.h */,
 				9777B22216D990A1008DC0E2 /* Calculation.m */,
 			);
-			name = Model;
+			name = "Model (COREDATA)";
 			sourceTree = "<group>";
 		};
 		979C6A4D16D296DA00A6FA1F = {
@@ -111,13 +111,10 @@
 				979C6A6A16D296DA00A6FA1F /* CalculatorAppDelegate.h */,
 				979C6A6B16D296DA00A6FA1F /* CalculatorAppDelegate.m */,
 				979C6A7316D296DA00A6FA1F /* MainStoryboard.storyboard */,
-				979C6A7916D296DA00A6FA1F /* CalculatorMainViewController.h */,
-				979C6A7A16D296DA00A6FA1F /* CalculatorMainViewController.m */,
-				979C6A7C16D296DA00A6FA1F /* CalculatorFlipsideViewController.h */,
-				979C6A7D16D296DA00A6FA1F /* CalculatorFlipsideViewController.m */,
-				979C6A8616D44AAB00A6FA1F /* CalculatorBrain.h */,
-				979C6A8716D44AAB00A6FA1F /* CalculatorBrain.m */,
-				9777B22016D99076008DC0E2 /* Model */,
+				97B1A00216DB61F6000B2A75 /* MainView Controller */,
+				97B1A00116DB61E1000B2A75 /* Calculator Brain */,
+				97B1A00016DB61C5000B2A75 /* Tape View */,
+				9777B22016D99076008DC0E2 /* Model (COREDATA) */,
 				979C6A6216D296DA00A6FA1F /* Supporting Files */,
 			);
 			path = Calculator_native;
@@ -135,6 +132,33 @@
 				979C6A7116D296DA00A6FA1F /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97B1A00016DB61C5000B2A75 /* Tape View */ = {
+			isa = PBXGroup;
+			children = (
+				979C6A7C16D296DA00A6FA1F /* CalculatorFlipsideViewController.h */,
+				979C6A7D16D296DA00A6FA1F /* CalculatorFlipsideViewController.m */,
+			);
+			name = "Tape View";
+			sourceTree = "<group>";
+		};
+		97B1A00116DB61E1000B2A75 /* Calculator Brain */ = {
+			isa = PBXGroup;
+			children = (
+				979C6A8616D44AAB00A6FA1F /* CalculatorBrain.h */,
+				979C6A8716D44AAB00A6FA1F /* CalculatorBrain.m */,
+			);
+			name = "Calculator Brain";
+			sourceTree = "<group>";
+		};
+		97B1A00216DB61F6000B2A75 /* MainView Controller */ = {
+			isa = PBXGroup;
+			children = (
+				979C6A7916D296DA00A6FA1F /* CalculatorMainViewController.h */,
+				979C6A7A16D296DA00A6FA1F /* CalculatorMainViewController.m */,
+			);
+			name = "MainView Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
