@@ -68,7 +68,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *button_eight;
 @property (weak, nonatomic) IBOutlet UIButton *button_nine;
 
-@property (weak, nonatomic) IBOutlet UIButton *button_history;
+//@property (weak, nonatomic) IBOutlet UIButton *button_history;
 @property (weak, nonatomic) IBOutlet UILabel *label_radians;
 @property (weak, nonatomic) IBOutlet UISwitch *switch_Radians;
 

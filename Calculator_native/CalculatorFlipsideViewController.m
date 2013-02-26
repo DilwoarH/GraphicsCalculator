@@ -23,10 +23,18 @@
 
 @implementation CalculatorFlipsideViewController
 
+/***************************************************************************************
+        AWAKE FROM NIB
+ ***************************************************************************************/
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
 }
+
+/***************************************************************************************
+        VIEW DID LOAD
+ ***************************************************************************************/
 
 - (void)viewDidLoad
 {
@@ -41,11 +49,19 @@
 
 }
 
+/***************************************************************************************
+        DID RECIEVE WARNING FUNCTION
+ ***************************************************************************************/
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/***************************************************************************************
+        DONE BUTTON
+ ***************************************************************************************/
 
 #pragma mark - Actions
 
@@ -54,6 +70,9 @@
     [self.delegate flipsideViewControllerDidFinish:self];
 }
 
+/***************************************************************************************
+        GETS DATA FROM THE DATABASE
+ ***************************************************************************************/
 
 - (void) getTapeData
 {
@@ -67,7 +86,7 @@
     
     if (matchingData.count <= 0){
     
-        [self.textView setText:@"None Found"];
+        [self.textView setText:@"None Found"]; //IF NO MATCH THEN RETURN NONE FOUND
     
     }else {
         
@@ -77,18 +96,22 @@
         for (NSManagedObject *obj in matchingData)
         {
             tape_current = [obj valueForKey:@"calculation"];
-            [display_tape addObject:tape_current];
+            [display_tape addObject:tape_current]; //ADD RESULTS INTO ARRAY
         }
         
-        NSString *calculations = [display_tape componentsJoinedByString:@"\n"];
+        NSString *calculations = [display_tape componentsJoinedByString:@"\n"]; //START NEW LINE
         
-        [self.textView setText:calculations];
+        [self.textView setText:calculations]; //SET TO TEXT VIEW
         
         NSLog(@"%@", display_tape);
     }
 
 
 }
+
+/***************************************************************************************
+        CLEAR THE DATA
+ ***************************************************************************************/
 
 - (IBAction)clearData:(id)sender {
     
@@ -102,7 +125,7 @@
     
     for (NSManagedObject *obj in matchingData)
     {
-        [context deleteObject:obj];
+        [context deleteObject:obj]; //DELETE EACH OBJECT FOUND
     }
     
     [context save:&error];

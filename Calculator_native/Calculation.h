@@ -10,6 +10,6 @@
 
 @interface Calculation : NSObject
 
-@property (nonatomic, strong) NSString *calculation;
+@property (nonatomic, strong) NSString *calculation; //STORE CALCULATION RESULTS
 
 @end
