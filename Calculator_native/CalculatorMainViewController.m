@@ -78,12 +78,20 @@
     CalculatorAppDelegate *appdelegate = [[UIApplication sharedApplication]delegate]; //CREATES THE DELEGATE FOR CORE DATA
     context = [appdelegate managedObjectContext]; //SETS CONTEXT TO CURRENT DELEGATE
     
+  
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear
+{
+    NSLog(@"hello");
+
 }
 
 
@@ -159,6 +167,16 @@
 - (void)flipsideViewControllerDidFinish:(CalculatorFlipsideViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil]; //DISMISSES CURRENT VIEW
+    
+    if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft ||
+        [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+        [self layout_landscape]; //IF VIEW IS LANDSCAPE CHANGE BUTTON LOCATION AND SIZE
+    }
+    else if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown)  {
+        [self layout_portrait]; //IF PORTRAIT RETURN TO ORIGINAL STATE
+    }
+
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -460,7 +478,7 @@
     
     UIButton *selected = (UIButton *)  sender; //SETS CALLING BUTTON TO SELECTED
     operation = [[NSString alloc] initWithString:selected.titleLabel.text]; //GETS THE OPERATION THAT WAS CLICKED
-    
+   
     [input setString:[NSString stringWithFormat:@"%g", firstNumber]]; //SETS FIRSTNUMBER TO DISPLAY
     [input appendString:@" "]; //ADDS SPACE (THIS WILL BE USED TO SEPERATE INTO ARRAY AND LOOKS NICER :)
     [input appendString:selected.titleLabel.text]; //ADDS OPERATION
@@ -480,13 +498,13 @@
 
 - (IBAction)equalsPressed:(id)sender {
 
-        double result;
+        double result = 0.0;
     
     if (specialPressed == NO){                      //IF SPECIAL NUMBER IS PRESSED THEN DONT DO EQUALS AS IT CREATES PROBLEMS
     //if operation is not set first number to text
     secondNumber = [self.brain getLastNumber:self.label_calculation.text]; 
 
-    if (equalsButton == YES) {
+    if (equalsButton == YES && operation != nil) {
         [input setString:[NSString stringWithFormat:@"%g", firstNumber]]; //IF EQUAL HAS BEEN PRESSED THEN ADD CURRENT ANSWER AND
         [input appendString:@" "];                                          //KEEP DOING SAME OPERATION
         [input appendString:operation];
@@ -557,7 +575,7 @@
     self.label_Answer.text = [NSString stringWithFormat:@"%.8g", result];
     }
     else {
-        [self.label_Answer setText:@"Error. Value Undefined"];
+        [self.label_Answer setText:@"Error. Value Undefined."];
     }
     
     [self.label_calculation setText:@""];
@@ -645,7 +663,7 @@
 
 /***************************************************************************************
             SQUARE ROOT NUMBER
- ***************************************************************************************/
+***************************************************************************************/
 
 
 - (IBAction)squareRoot:(id)sender {
@@ -870,7 +888,7 @@
     
      double enteredNumber = secondNumber;
     
-      if (secondNumber){ //IF NUMBER IS NOT ZERO DO THIS
+      if (secondNumber != NAN){ //IF NUMBER IS NOT ZERO DO THIS
           
     if ([title isEqualToString:@"sin"]) //IF IT EQUALS TO SINE THEN DO
     {
@@ -947,7 +965,7 @@
     
     double enteredNumber = secondNumber;
     
-    if (secondNumber){
+    if (secondNumber != NAN){
         
         if ([title isEqualToString:@"cos"])
         {
@@ -1023,7 +1041,7 @@
     
     double enteredNumber = secondNumber;
     
-    if (secondNumber){
+    if (secondNumber  != NAN){
         
         if ([title isEqualToString:@"tan"])
         {

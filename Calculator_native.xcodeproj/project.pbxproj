@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9764898416DC84100046C3DF /* ICON.png in Resources */ = {isa = PBXBuildFile; fileRef = 9764898316DC84100046C3DF /* ICON.png */; };
+		9764898616DCA17C0046C3DF /* logo2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9764898516DCA17C0046C3DF /* logo2.png */; };
 		9777B21F16D9637E008DC0E2 /* Calculator_native.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9777B21D16D9637E008DC0E2 /* Calculator_native.xcdatamodeld */; };
 		9777B22316D990A1008DC0E2 /* Calculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9777B22216D990A1008DC0E2 /* Calculation.m */; };
 		979C6A5A16D296DA00A6FA1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 979C6A5916D296DA00A6FA1F /* UIKit.framework */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		9764898316DC84100046C3DF /* ICON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ICON.png; sourceTree = "<group>"; };
+		9764898516DCA17C0046C3DF /* logo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo2.png; sourceTree = "<group>"; };
 		9777B21E16D9637E008DC0E2 /* Calculator_native.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Calculator_native.xcdatamodel; sourceTree = "<group>"; };
 		9777B22116D990A1008DC0E2 /* Calculation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculation.h; sourceTree = "<group>"; };
 		9777B22216D990A1008DC0E2 /* Calculation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculation.m; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		979C6A4D16D296DA00A6FA1F = {
 			isa = PBXGroup;
 			children = (
+				9764898516DCA17C0046C3DF /* logo2.png */,
 				9764898316DC84100046C3DF /* ICON.png */,
 				979C6A6116D296DA00A6FA1F /* Calculator_native */,
 				979C6A5816D296DA00A6FA1F /* Frameworks */,
@@ -222,6 +225,7 @@
 				979C6A7216D296DA00A6FA1F /* Default-568h@2x.png in Resources */,
 				979C6A7516D296DA00A6FA1F /* MainStoryboard.storyboard in Resources */,
 				9764898416DC84100046C3DF /* ICON.png in Resources */,
+				9764898616DCA17C0046C3DF /* logo2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +330,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Calculator_native/Calculator_native-Prefix.pch";
 				INFOPLIST_FILE = "Calculator_native/Calculator_native-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -337,7 +343,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Calculator_native/Calculator_native-Prefix.pch";
 				INFOPLIST_FILE = "Calculator_native/Calculator_native-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
